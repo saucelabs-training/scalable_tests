@@ -1,5 +1,6 @@
 package com.saucelabs.scalable_tests;
 
+import com.saucelabs.scalable_tests.data.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.saucelabs.scalable_tests.pages.HeaderSection;
@@ -11,8 +12,9 @@ public class AuthenticationTest extends BaseTest {
     @Test
     public void signInUnsuccessful() {
         HomePage homePage = HomePage.visit(driver);
+        User lockedOutUser = User.lockedOut();
 
-        homePage.login("locked_out_user", "secret_sauce");
+        homePage.login(lockedOutUser);
 
         Assertions.assertTrue(homePage.isLockedOut(), "Error Not Found");
     }
@@ -20,8 +22,9 @@ public class AuthenticationTest extends BaseTest {
     @Test
     public void signInSuccessful() {
         HomePage homePage = HomePage.visit(driver);
+        User validUser = User.valid();
 
-        homePage.login("standard_user", "secret_sauce");
+        homePage.login(validUser);
 
         InventoryPage inventoryPage = new InventoryPage(driver);
         Assertions.assertTrue(inventoryPage.isOnPage(), "Login Not Successful");
@@ -30,7 +33,8 @@ public class AuthenticationTest extends BaseTest {
     @Test
     public void logout() {
         HomePage homePage = HomePage.visit(driver);
-        homePage.login("standard_user", "secret_sauce");
+        User validUser = User.valid();
+        homePage.login(validUser);
 
         HeaderSection headerSection = new HeaderSection(driver);
         headerSection.logOut();

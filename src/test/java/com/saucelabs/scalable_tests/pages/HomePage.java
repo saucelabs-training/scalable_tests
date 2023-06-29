@@ -1,5 +1,6 @@
 package com.saucelabs.scalable_tests.pages;
 
+import com.saucelabs.scalable_tests.data.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -20,9 +21,9 @@ public class HomePage extends BasePage {
         this.driver = driver;
     }
 
-    public void login(String username, String password) {
-        driver.findElement(usernameTextfield).sendKeys(username);
-        driver.findElement(passwordTextfield).sendKeys(password);
+    public void login(User user) {
+        driver.findElement(usernameTextfield).sendKeys(user.getUsername());
+        driver.findElement(passwordTextfield).sendKeys(user.getPassword());
         driver.findElement(loginButton).click();
     }
 

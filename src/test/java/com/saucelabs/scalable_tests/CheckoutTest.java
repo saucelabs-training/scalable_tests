@@ -1,5 +1,7 @@
 package com.saucelabs.scalable_tests;
 
+import com.saucelabs.scalable_tests.data.Person;
+import com.saucelabs.scalable_tests.data.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.saucelabs.scalable_tests.pages.CartPage;
@@ -14,7 +16,9 @@ public class CheckoutTest extends BaseTest {
 
     public void login() {
         HomePage homePage = HomePage.visit(driver);
-        homePage.login("standard_user", "secret_sauce");
+        User validUser = User.valid();
+
+        homePage.login(validUser);
     }
 
     public void goToCheckoutWithItem() {
@@ -31,10 +35,11 @@ public class CheckoutTest extends BaseTest {
         goToCheckoutWithItem();
         InformationPage informationPage = new InformationPage(driver);
 
-        informationPage.addInformation("Luke", "Perry", "90210");
+        Person validPerson = new Person();
+        informationPage.addInformation(validPerson);
 
         CheckoutPage checkoutPage = new CheckoutPage(driver);
-        Assertions.assertTrue(checkoutPage.isOnPage(),"Information Submission Unsuccessful");
+        Assertions.assertTrue(checkoutPage.isOnPage(), "Information Submission Unsuccessful");
     }
 
     @Test
@@ -42,7 +47,8 @@ public class CheckoutTest extends BaseTest {
         login();
         goToCheckoutWithItem();
         InformationPage informationPage = new InformationPage(driver);
-        informationPage.addInformation("Luke", "Perry", "90210");
+        Person validPerson = new Person();
+        informationPage.addInformation(validPerson);
 
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.finish();
