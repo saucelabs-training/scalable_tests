@@ -11,12 +11,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 
 public class BaseTest {
     WebDriver driver;
@@ -28,6 +31,10 @@ public class BaseTest {
     public static void toggleExecution() {
         // This would normally be toggled via CI tool ENV or similar
         System.setProperty("SELENIUM_PLATFORM", "SAUCE");
+
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+        LogManager.getLogManager().getLogger("").setLevel(Level.INFO);
     }
 
     @BeforeEach
